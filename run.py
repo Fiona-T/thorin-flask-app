@@ -13,20 +13,21 @@ def index():
 
 
 # path to about file, binds to a view, returns the rendered about.html page
+# page_title variable displays the text assigned to it, in the html page
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html", page_title="About", list_of_numbers=[1,2,3])
 
 
 # route and view for contact page
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", page_title="Contact")
 
 
 @app.route("/careers")
 def careers():
-    return render_template("careers.html")
+    return render_template("careers.html", page_title="Careers")
 
 
 # run the app using the arguments supplied below. defaults for IP and PORT
