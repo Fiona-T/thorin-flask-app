@@ -1,11 +1,16 @@
 import os
 # as we are importing data as json
 import json
-# import the Flask class, and render_template function
-from flask import Flask, render_template
+# import the Flask class, and render_template function, request method for form handling, flash for user feedback
+from flask import Flask, render_template, request, flash
+# import the env.py file if it exists
+if os.path.exists("env.py"):
+    import env
 
 # create instance of Flask class, naming convention is to call this app
 app = Flask(__name__)
+# get the secret key from the env.py
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 # route decorator - root directory - calls index function, which renders that file
@@ -37,8 +42,11 @@ def about_member(member_name):
 
 
 # route and view for contact page
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        flash("Thanks {}, we have received your message!".format(
+            request.form.get("name")))
     return render_template("contact.html", page_title="Contact")
 
 
